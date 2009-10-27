@@ -1,3 +1,7 @@
+== 0.0.3 / 2009-10-27
+
+* to_app(&block) takes 2 arguments, builder and stubber.
+
 == 0.0.2 / 2009-10-27
 
 * to_app(&block) let to specify extra rackware.

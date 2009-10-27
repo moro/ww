@@ -6,7 +6,7 @@ module Stumb
   autoload :Stamp,      'stumb/stamp'
   autoload :StampSheet, 'stumb/stamp_sheet'
 
-  Version = '0.0.2'
+  Version = '0.0.3'
 
   def to_app(response, sheet_path = "/sheet", &block)
     Rack::Builder.new {
@@ -16,7 +16,7 @@ module Stumb
       sheet = StampSheet.new(stub)
 
       map(sheet_path) { run sheet }
-      instance_eval(&block) if block_given?
+      yield self, stub if block_given?
       map("/") { run stub }
     }
   end

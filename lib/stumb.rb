@@ -6,6 +6,8 @@ module Stumb
   autoload :Stamp,      'stumb/stamp'
   autoload :StampSheet, 'stumb/stamp_sheet'
 
+  Version = '0.0.1'
+
   def to_app(response, sheet_path = "/sheet")
     Rack::Builder.new {
       use Rack::ShowExceptions

@@ -1,0 +1,8 @@
+== 0.0.2 / 2009-10-27
+
+* to_app(&block) let to specify extra rackware.
+
+== 0.0.1 / 2009-10-27
+
+* initial release
+

@@ -43,7 +43,7 @@ spec = Gem::Specification.new do |s|
 	s.version           = VERS
 	s.platform          = Gem::Platform::RUBY
 	s.has_rdoc          = true
-	s.extra_rdoc_files  = ["README.rdoc", "ChangeLog"]
+	# s.extra_rdoc_files  = ["README.rdoc", "ChangeLog"]
 	s.rdoc_options     += RDOC_OPTS + ['--exclude', '^(examples|extras)/']
 	s.summary           = DESCRIPTION
 	s.description       = DESCRIPTION
@@ -58,7 +58,7 @@ spec = Gem::Specification.new do |s|
 	#s.add_dependency('activesupport', '>=1.3.1')
 	#s.required_ruby_version = '>= 1.8.2'
 
-	s.files = %w(README.rdoc ChangeLog Rakefile) +
+	s.files = %w(Rakefile) +
 		Dir.glob("{bin,doc,test,lib,templates,generator,extras,website,script}/**/*") + 
 		Dir.glob("ext/**/*.{h,c,rb}") +
 		Dir.glob("examples/**/*.rb") +

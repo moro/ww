@@ -2,14 +2,14 @@
 
 Gem::Specification.new do |s|
   s.name = %q{stumb}
-  s.version = "0.0.3"
+  s.version = "0.0.4"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["moro"]
-  s.date = %q{2009-10-27}
+  s.date = %q{2009-11-05}
   s.description = %q{store and show stubbed web-request.}
   s.email = %q{moronatural@gmail.com}
-  s.files = ["Rakefile", "lib/stumb", "lib/stumb/stamp.rb", "lib/stumb/stamp_sheet.rb", "lib/stumb/stub.rb", "lib/stumb.rb"]
+  s.files = ["Rakefile", "lib/stumb", "lib/stumb/sheet.html.haml", "lib/stumb/stamp.rb", "lib/stumb/stamp_sheet.rb", "lib/stumb/stub.rb", "lib/stumb.rb"]
   s.homepage = %q{http://github.com/moro/stumb/}
   s.rdoc_options = ["--title", "stumb documentation", "--charset", "utf-8", "--opname", "index.html", "--line-numbers", "--main", "README.rdoc", "--inline-source", "--exclude", "^(examples|extras)/"]
   s.require_paths = ["lib"]

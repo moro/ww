@@ -1,0 +1,58 @@
+!!!
+%html
+  %head
+    %script{:src=>"http://ajax.googleapis.com/ajax/libs/jquery/1.3.1/jquery.min.js"}
+    %style{:type=>"text/css"}
+      :sass
+        body
+          width: 80%
+          margin: auto
+        div.stump
+          font-size: 10px
+          border: 1px solid silver
+          padding: 0 1em
+
+          > p span
+            color: blue
+
+          h3
+            font-size: small
+            border-bottom: 1px solid green
+          .headers table, div.body pre
+            background: #cfc
+            margin: 1em
+            padding: 1em
+          
+          div.body pre
+            overflow: auto
+  %body
+    %h1&= "#{stamps.size} requests"
+    - stamps.reverse.each do |stamp|
+      %div.stump{:id => stamp.object_id}
+        %h2
+          %span.method&= stamp.request.request_method
+          %span.path&= stamp.request.fullpath
+        %p
+          on 
+          %span.time&= stamp.time.iso8601
+          from
+          %span.source&= stamp.request.ip
+        %div
+          .headers
+            %h3 Headers
+            %table{:style=>"display:none"}
+              - stamp.request.env.each do |k,v|
+                - next if k =~ /\A[a-z]/
+                %tr
+                  %th&= k
+                  %td&= v
+
+          .body
+            %h3 Body
+            %pre{:style=>"display:none"}&= stamp.body.gsub(/(?:\r)?\n/, "\r\n")
+
+:javascript
+  jQuery(function(){
+    $("div.stump .headers h3").click(function(){ $(this).next("table").toggle() }); 
+    $("div.stump .body h3").click(function(){ $(this).next("pre").toggle() }); 
+  });

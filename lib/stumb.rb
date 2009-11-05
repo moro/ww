@@ -6,7 +6,7 @@ module Stumb
   autoload :Stamp,      'stumb/stamp'
   autoload :StampSheet, 'stumb/stamp_sheet'
 
-  Version = '0.0.3'
+  Version = '0.0.4'
 
   def to_app(response, sheet_path = "/sheet", &block)
     Rack::Builder.new {

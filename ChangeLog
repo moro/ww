@@ -1,3 +1,6 @@
+== 0.1.0 / 2009-11-09
+* to_app(&block) is now wrapper for Sinatra.
+
 == 0.0.3 / 2009-10-27
 
 * to_app(&block) takes 2 arguments, builder and stubber.

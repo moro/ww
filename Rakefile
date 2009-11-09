@@ -55,7 +55,7 @@ spec = Gem::Specification.new do |s|
 	s.require_path      = "lib"
 	s.test_files        = Dir["test/*_test.rb"]
 
-	#s.add_dependency('activesupport', '>=1.3.1')
+	s.add_dependency('sinatra', '>=0.9.4')
 	#s.required_ruby_version = '>= 1.8.2'
 
 	s.files = %w(Rakefile) +

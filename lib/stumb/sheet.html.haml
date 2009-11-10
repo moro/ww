@@ -47,7 +47,7 @@
             border: 1px dashed green
             margin: 1em
             padding: 1em
-          
+
           div.body pre
             overflow: auto
             font-size: 12px
@@ -58,7 +58,7 @@
         %h2
           %span.method&= stamp.request.request_method
           %span.path&= stamp.request.fullpath
-          on 
+          on
           %span.time&= stamp.time.iso8601
           from
           %span.source&= stamp.request.ip
@@ -79,8 +79,8 @@
 
 :javascript
   jQuery(function(){
-    $("div.stump .headers h3").click(function(){ $(this).next("table").toggle() }); 
-    $("div.stump .body h3").click(function(){ $(this).next("pre").toggle() }); 
+    $("div.stump .headers h3").click(function(){ $(this).next("table").toggle() });
+    $("div.stump .body h3").click(function(){ $(this).next("pre").toggle() });
     $("div.stump .headers table").hide();
     $("div.stump .body pre").hide();
   });

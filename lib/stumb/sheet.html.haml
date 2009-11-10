@@ -1,5 +1,5 @@
 :ruby
-  title = "#{stamps.size} requests - Stumb, stub and show requests."
+  title = "#{store.size} requests - Stumb, stub and show requests."
 !!!
 %html
   %head
@@ -53,7 +53,7 @@
             font-size: 12px
   %body
     %h1&= title
-    - stamps.reverse.each do |stamp|
+    - store.each do |stamp|
       %div.stump{:id => stamp.object_id}
         %h2
           %span.method&= stamp.request.request_method

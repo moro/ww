@@ -3,7 +3,7 @@ require 'sinatra'
 module Stumb
   class Servlet < Sinatra::Base
     def self.store(req)
-      @store.stamps << Stamp.new(req.dup)
+      @store.store(Stamp.new(req.dup))
     end
 
     def self.storage=(store)

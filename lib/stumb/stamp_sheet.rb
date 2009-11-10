@@ -3,12 +3,14 @@ require 'time'
 
 module Stumb
   class StampSheet
-    def initialize(stub)
-      @stub = stub
+    attr_reader :store
+
+    def initialize(store)
+      @store = store
     end
 
     def call(env)
-      [200, {"Content-Type" => "text/html"}, template.render(@stub)]
+      [200, {"Content-Type" => "text/html"}, template.render(self)]
     end
 
     private

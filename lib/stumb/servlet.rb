@@ -2,12 +2,27 @@ require 'sinatra'
 
 module Stumb
   class Servlet < Sinatra::Base
-    def self.store(req)
-      @store.store(Stamp.new(req.dup))
+    module Double
+      def stub(verb, path, &block)
+        send(verb, path, &block)
+      end
     end
 
-    def self.storage=(store)
-      @store = store
+    class << self
+      def store(req)
+        @store.store(Stamp.new(req.dup))
+      end
+
+      def storage=(store)
+        @store = store
+      end
+
+      def base(&block)
+        Class.new(self).tap do |k|
+          k.extend Double
+          k.class_eval(&block)
+        end
+      end
     end
 
     def stump!

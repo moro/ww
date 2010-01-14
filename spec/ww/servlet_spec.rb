@@ -91,12 +91,12 @@ describe Ww::Servlet do
 
       it { should == [200, {"Content-Type"=>"text/plain", "Content-Length"=>"8"}, ["Hi World"]] }
       it {
-        expect{ @server.verify }.should_not raise_error Ww::Servlet::Double::Error
+        expect{ @server.verify }.should_not raise_error Ww::Double::MockError
       }
     end
 
     describe "don't call" do
-      it { expect{ @server.verify }.should raise_error Ww::Servlet::Double::Error }
+      it { expect{ @server.verify }.should raise_error Ww::Double::MockError }
     end
   end
 end

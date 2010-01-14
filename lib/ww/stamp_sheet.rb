@@ -1,12 +1,14 @@
-require 'haml'
+require 'forwardable'
 require 'time'
+require 'haml'
 
 module Ww
   class StampSheet
-    attr_reader :store
+    extend Forwardable
+    def_delegator :@servlet, :requests
 
-    def initialize(store)
-      @store = store
+    def initialize(servlet)
+      @servlet = servlet
     end
 
     def call(env)

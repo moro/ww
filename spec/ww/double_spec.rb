@@ -107,6 +107,7 @@ describe Ww::Double, "with Servlet" do
 
       subject{ @server.requests.first }
 
+      it { should be_a Rack::Request }
       its(:request_method) { should == 'GET' }
       its(:fullpath) { should == "/" }
 
@@ -137,6 +138,7 @@ describe Ww::Double, "with Servlet" do
 
     subject{ @server.requests }
     it { should_not be_empty }
+    it { @server.requests.first.should be_a Ww::Double::Spy::Request }
   end
 end
 

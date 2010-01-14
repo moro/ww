@@ -1,5 +1,6 @@
 :ruby
-  title = "#{store.size} requests - Double Web"
+  require 'pp'
+  title = "#{requests.size} requests - Double Web"
 !!!
 %html
   %head
@@ -43,6 +44,12 @@
             background: #cfb
             padding: 2px 0 0 2px
 
+            span.media_type
+              color: blue
+              font-size: small
+              font-weight: normal
+              font-family: 'Courier', monospace
+
           .headers table, div.body pre
             border: 1px dashed green
             margin: 1em
@@ -53,29 +60,31 @@
             font-size: 12px
   %body
     %h1&= title
-    - store.each do |stamp|
-      %div.stump{:id => stamp.object_id}
+    - requests.each do |wreq|
+      %div.stump{:id => wreq.object_id}
         %h2
-          %span.method&= stamp.request.request_method
-          %span.path&= stamp.request.fullpath
+          %span.method&= wreq.request_method
+          %span.path&= wreq.fullpath
           on
-          %span.time&= stamp.time.iso8601
+          %span.time&= wreq.time.iso8601
           from
-          %span.source&= stamp.request.ip
+          %span.source&= wreq.ip
         %div
           .headers
             %h3 Headers
             %table
-              - stamp.request.env.each do |k,v|
+              - wreq.env.each do |k,v|
                 - next if k =~ /\A[a-z]/
                 %tr
                   %th&= k
                   %td&= v
 
-          - unless stamp.request.get?
+          - unless wreq.get?
             .body
-              %h3 Body
-              %pre&= stamp.body.gsub(/(?:\r)?\n/, "\r\n")
+              %h3
+                Body
+                %span.media_type= wreq.media_type
+              %pre&= wreq.parsed_body.pretty_inspect
 
 :javascript
   jQuery(function(){

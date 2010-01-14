@@ -2,27 +2,20 @@ require 'rubygems'
 require 'rack'
 
 module Ww
-  autoload :Store,      'ww/store'
-  autoload :Stamp,      'ww/stamp'
-  autoload :StampSheet, 'ww/stamp_sheet'
   autoload :Servlet,    'ww/servlet'
+  autoload :StampSheet, 'ww/stamp_sheet'
 
-  Version = '0.1.1'
+  Version = '0.2.0'
 
   def to_app(sheet_path = "/sheet", &block)
     Rack::Builder.new {
       use Rack::ShowExceptions
 
-      store = Store.new
-      sheet = StampSheet.new(store)
+      servlet = Servlet.base(&block)
+      sheet = StampSheet.new(servlet)
 
       map(sheet_path) { run sheet }
-
-      sinatra = Class.new(Servlet)
-      sinatra.storage = store
-      sinatra.class_eval(&block)
-
-      map("/") { run sinatra }
+      map("/") { run servlet }
     }
   end
   module_function :to_app

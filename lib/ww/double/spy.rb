@@ -1,4 +1,5 @@
 require 'ww/store'
+require 'ww/double/spy/request'
 
 module Ww
   module Double
@@ -17,7 +18,7 @@ module Ww
       end
 
       def store(req)
-        requests.store(req.dup)
+        requests.store(Request.new(req))
       end
 
       module InstanceMethods

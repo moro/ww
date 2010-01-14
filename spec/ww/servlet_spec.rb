@@ -99,5 +99,37 @@ describe Ww::Servlet do
       it { expect{ @server.verify }.should raise_error Ww::Double::MockError }
     end
   end
+
+  describe "spy(:get, '/')" do
+    before do
+      @server.spy(:get, '/') do
+        response.status = 200
+        response["Content-Type"] = "text/plain"
+        response.body = "Hi World"
+      end
+    end
+
+    describe "GET / リクエストの" do
+      before do
+        app = @server.new
+        @response = app.call( Rack::MockRequest.env_for("/", :method => "GET"))
+      end
+
+      subject{ @server.requests.first }
+
+      its(:request_method) { should == 'GET' }
+      its(:fullpath) { should == "/" }
+
+      it "bodyは空のIOであること" do
+        subject.body.rewind
+        subject.body.read.should == ""
+      end
+
+      it "レスポンスは想定どおりのものであること" do
+        @response.should ==
+          [200, {"Content-Type"=>"text/plain", "Content-Length"=>"8"}, ["Hi World"]]
+      end
+    end
+  end
 end
 

@@ -13,7 +13,7 @@ include FileUtils
 NAME              = "ww"
 AUTHOR            = "moro"
 EMAIL             = "moronatural@gmail.com"
-DESCRIPTION       = "framework to build double Web server."
+DESCRIPTION       = "Double Web, framework to build double Web server."
 HOMEPAGE          = "http://github.com/moro/#{NAME}/"
 BIN_FILES         = %w(  )
 

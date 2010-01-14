@@ -11,7 +11,6 @@ describe Ww::Server do
     end
 
     Ww::Server.start_once
-    @response = OpenURI.open_uri("http://localhost:3080/hello")
   end
 
   it do
@@ -24,10 +23,13 @@ describe Ww::Server do
 
   describe "store only spy-ed action" do
     before do
-      URI("http://localhost:3080/goodnight")
-      URI("http://localhost:3080/hello")
+      ignore = URI("http://localhost:3080/goodnight").read
+      ignore = URI("http://localhost:3080/hello").read
     end
-    it { Ww::Server.app.current.should have(1).requests }
+
+    subject { Ww::Server.app.current.requests }
+    it { should have(1).items }
+    it { subject.first.path.should == "/hello" }
   end
 
   describe "with stubing" do
@@ -37,9 +39,8 @@ describe Ww::Server do
       Ww::Server.app.stub(:get, "/goodnight") { "I'm sleepy, too" }
     end
 
-    it do
-      URI("http://localhost:3080/goodnight").read.should == "I'm sleepy, too"
-    end
+    subject { URI("http://localhost:3080/goodnight").read }
+    it { should == "I'm sleepy, too" }
   end
 end
 

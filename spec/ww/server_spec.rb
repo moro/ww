@@ -1,6 +1,7 @@
 require File.expand_path("../spec_helper", File.dirname(__FILE__))
 require 'ww/server'
 require 'open-uri'
+require 'json'
 
 describe Ww::Server do
   before do
@@ -30,6 +31,24 @@ describe Ww::Server do
     subject { Ww::Server.app.current.requests }
     it { should have(1).items }
     it { subject.first.path.should == "/hello" }
+  end
+
+  describe "spying POST action" do
+    before do
+      Ww::Server.app.spy(:post, "/message") { status(200) }
+
+      Net::HTTP.start("localhost", 3080) do |http|
+        post = Net::HTTP::Post.new("/message")
+        post["Content-Type"] = "application/json"
+        post.body = {:message => "I'm double Ruby.", :madeby => "moro"}.to_json
+        http.request post
+      end
+    end
+    subject { Ww::Server.app.current.requests.first }
+
+    its(:parsed_body) do
+      should == {"message" => "I'm double Ruby.", "madeby" => "moro"}
+    end
   end
 
   describe "with stubing" do

@@ -6,14 +6,6 @@ module Ww
 
   class Servlet < Sinatra::Base
     class << self
-      def store(req)
-        @store.store(Stamp.new(req.dup))
-      end
-
-      def storage=(store)
-        @store = store
-      end
-
       def base(&block)
         Class.new(self).tap do |k|
           k.extend Double
@@ -22,11 +14,6 @@ module Ww
         end
       end
     end
-
-    def spy
-      self.class.store(@request)
-    end
-    alias stump! spy
   end
 end
 

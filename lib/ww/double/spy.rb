@@ -14,10 +14,15 @@ module Ww
         @requests ||= []
       end
 
+      def store(req)
+        requests << req.dup
+      end
+
       module InstanceMethods
         def spy!
-          self.class.requests << @request
+          self.class.store(@request)
         end
+        alias stump! spy!
       end
     end
   end

@@ -121,5 +121,22 @@ describe Ww::Double, "with Servlet" do
       end
     end
   end
+
+  describe "spy(:get, '/') backword compat" do
+    before do
+      @server.get('/backword') do
+        stump!
+        response.status = 200
+        response["Content-Type"] = "text/plain"
+        response.body = "Hi World"
+      end
+
+      app = @server.new
+      @response = app.call( Rack::MockRequest.env_for("/backword", :method => "GET"))
+    end
+
+    subject{ @server.requests }
+    it { should_not be_empty }
+  end
 end
 

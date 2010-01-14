@@ -12,28 +12,32 @@ module Stumb
       end
 
       module Mock
+        class Expectation
+          def executed!; @e = true; end
+          def executed?; !!@e; end
+          attr_reader :identifier
+          def initialize(verb, path)
+            @identifier = "_mock_ #{verb.to_s.upcase} #{path}"
+          end
+        end
+
         def mock(verb, path, &block)
-          v = verb.to_s.upcase
-          ident = [verb, path]
-          expectations << ident
+          expectations << (expect = Expectation.new(verb, path))
+          begin
+            define_method(expect.identifier, &block)
+            action = instance_method(expect.identifier)
 
-          action = Proc.new do |*args|
-            self.class.consume(ident)
-            instance_eval(&block)
+            stub(verb, path) do |*args|
+              expect.executed!
+              action.bind(self).call(*args)
+            end
+          ensure
+            remove_method(expect.identifier) if instance_methods.include?(expect.identifier)
           end
-          stub(verb, path, &action)
         end
 
-        def finish
-          raise Error unless expectations.empty?
-        end
-
-        # TODO refactor
-        def consume(ident)
-          synchronize do
-            pos = expectations.index(expectations.detect {|m| m.eql?(ident) })
-            expectations.delete_at(pos)
-          end
+        def verify
+          raise Error unless expectations.all? {|mock| mock.executed? }
         end
 
         private

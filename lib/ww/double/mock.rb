@@ -12,16 +12,11 @@ module Ww
 
       def mock(verb, path, &block)
         expectations << (expect = Expectation.new(verb, path))
-        begin
-          define_method(expect.identifier, &block)
-          action = instance_method(expect.identifier)
+        action = Double.unbound_action(self, expect.identifier, block)
 
-          stub(verb, path) do |*args|
-            expect.executed!
-            action.bind(self).call(*args)
-          end
-        ensure
-          remove_method(expect.identifier) if instance_methods.include?(expect.identifier)
+        stub(verb, path) do |*args|
+          expect.executed!
+          action.bind(self).call(*args)
         end
       end
 

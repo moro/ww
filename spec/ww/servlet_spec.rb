@@ -1,9 +1,9 @@
 require File.expand_path("../spec_helper", File.dirname(__FILE__))
-require 'stumb/servlet'
+require 'ww/servlet'
 
-describe Stumb::Servlet do
+describe Ww::Servlet do
   before do
-    @server = Stumb::Servlet.base do
+    @server = Ww::Servlet.base do
       get("/") do
         response.status = 200
         response["Content-Type"] = "text/plain"
@@ -91,12 +91,12 @@ describe Stumb::Servlet do
 
       it { should == [200, {"Content-Type"=>"text/plain", "Content-Length"=>"8"}, ["Hi World"]] }
       it {
-        expect{ @server.verify }.should_not raise_error Stumb::Servlet::Double::Error
+        expect{ @server.verify }.should_not raise_error Ww::Servlet::Double::Error
       }
     end
 
     describe "don't call" do
-      it { expect{ @server.verify }.should raise_error Stumb::Servlet::Double::Error }
+      it { expect{ @server.verify }.should raise_error Ww::Servlet::Double::Error }
     end
   end
 end

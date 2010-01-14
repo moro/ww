@@ -1,7 +1,7 @@
 require 'haml'
 require 'time'
 
-module Stumb
+module Ww
   class StampSheet
     attr_reader :store
 

@@ -1,4 +1,4 @@
-module Stumb
+module Ww
   class Stamp
     attr_reader :time, :request
     def initialize(req)

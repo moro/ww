@@ -7,17 +7,17 @@ require 'rake/gempackagetask'
 require 'rake/rdoctask'
 require 'fileutils'
 require 'spec/rake/spectask'
-require 'lib/stumb'
+require 'lib/ww'
 include FileUtils
 
-NAME              = "stumb"
+NAME              = "ww"
 AUTHOR            = "moro"
 EMAIL             = "moronatural@gmail.com"
-DESCRIPTION       = "store and show stubbed web-request."
+DESCRIPTION       = "framework to build double Web server."
 HOMEPAGE          = "http://github.com/moro/#{NAME}/"
 BIN_FILES         = %w(  )
 
-VERS              = Stumb::Version
+VERS              = Ww::Version
 REV = File.read(".svn/entries")[/committed-rev="(d+)"/, 1] rescue nil
 CLEAN.include ['**/.*.sw?', '*.gem', '.config']
 RDOC_OPTS = [

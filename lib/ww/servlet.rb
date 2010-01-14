@@ -1,7 +1,7 @@
 require 'sinatra/base'
 require 'monitor'
 
-module Stumb
+module Ww
   class Servlet < Sinatra::Base
     module Double
       class Error < RuntimeError; end

@@ -1,11 +1,11 @@
 require 'rubygems'
 require 'rack'
 
-module Stumb
-  autoload :Store,      'stumb/store'
-  autoload :Stamp,      'stumb/stamp'
-  autoload :StampSheet, 'stumb/stamp_sheet'
-  autoload :Servlet,    'stumb/servlet'
+module Ww
+  autoload :Store,      'ww/store'
+  autoload :Stamp,      'ww/stamp'
+  autoload :StampSheet, 'ww/stamp_sheet'
+  autoload :Servlet,    'ww/servlet'
 
   Version = '0.1.1'
 

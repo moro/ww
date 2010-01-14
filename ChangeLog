@@ -1,3 +1,6 @@
+== 0.2.0 / 2010 01-14
+* restart with new name `ww'
+
 == 0.1.0 / 2009-11-09
 * to_app(&block) is now wrapper for Sinatra.
 

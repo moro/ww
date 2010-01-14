@@ -1,13 +1,21 @@
 require 'monitor'
+require 'forwardable'
 
-module Stumb
+module Ww
   class Store
     include Enumerable
     include MonitorMixin
+    extend Forwardable
+
+    def_delegators :storage, *[:size, :first, :last, :[], :empty?]
 
     def initialize
       super()
       @store = []
+    end
+
+    def storage
+      synchronize { @store.dup }
     end
 
     def store(obj)
@@ -15,16 +23,11 @@ module Stumb
     end
 
     def each(descendant = true, &block)
-      store = synchronize{ @store.dup }
-      (descendant ? store.reverse : store).each(&block)
-    end
-
-    def size
-      synchronize{ @store.size }
+      (descendant ? storage.reverse : storage).each(&block)
     end
 
     def clear!
-      @store.clear
+      synchronize{ @store.clear }
     end
   end
 end

@@ -1,3 +1,5 @@
+require 'ww/store'
+
 module Ww
   module Double
     module Spy
@@ -11,11 +13,11 @@ module Ww
       end
 
       def requests
-        @requests ||= []
+        @requests ||= Store.new
       end
 
       def store(req)
-        requests << req.dup
+        requests.store(req.dup)
       end
 
       module InstanceMethods

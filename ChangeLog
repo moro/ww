@@ -1,3 +1,6 @@
+== 0.2.1 / 2010 01-14
+* FIX add dependency to haml.
+
 == 0.2.0 / 2010 01-14
 * restart with new name `ww'
 

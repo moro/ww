@@ -1,4 +1,3 @@
-require 'rubygems'
 require 'rack/request'
 
 autoload :JSON, 'json'

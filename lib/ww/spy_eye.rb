@@ -3,7 +3,7 @@ require 'time'
 require 'haml'
 
 module Ww
-  class StampSheet
+  class SpyEye
     extend Forwardable
     def_delegator :@servlet, :requests
 
@@ -17,7 +17,7 @@ module Ww
 
     private
     def template
-      path = ::File.expand_path("sheet.html.haml", ::File.dirname(__FILE__))
+      path = ::File.expand_path("spy_eye.html.haml", ::File.dirname(__FILE__))
       Haml::Engine.new(::File.read(path))
     end
   end

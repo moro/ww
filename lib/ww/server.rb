@@ -33,9 +33,9 @@ module Ww
 
     private
     def run_with_picking_server_instance!
-      sv = Queue.new
-      @thread = Thread.new { @handler.run(@app, :Port => @options[:port]) {|server| sv << server } }
-      @server = sv.pop
+      q = Queue.new
+      @thread = Thread.new { @handler.run(@app, :Port => @options[:port]) {|server| q << server } }
+      @server = q.pop
     end
 
     def shutdown_http_server

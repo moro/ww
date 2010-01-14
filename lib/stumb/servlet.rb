@@ -1,4 +1,4 @@
-require 'sinatra'
+require 'sinatra/base'
 require 'monitor'
 
 module Stumb
@@ -76,9 +76,10 @@ module Stumb
       end
     end
 
-    def stump!
+    def spy
       self.class.store(@request)
     end
+    alias stump! spy
   end
 end
 

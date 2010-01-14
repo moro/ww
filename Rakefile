@@ -56,6 +56,8 @@ spec = Gem::Specification.new do |s|
 	s.test_files        = Dir["test/*_test.rb"]
 
 	s.add_dependency('sinatra', '>=0.9.4')
+	s.add_dependency('rack', '>=1.0.1')
+	s.add_dependency('json')
 	#s.required_ruby_version = '>= 1.8.2'
 
 	s.files = %w(Rakefile) +

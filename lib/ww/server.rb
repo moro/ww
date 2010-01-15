@@ -1,40 +1,56 @@
-require 'ww/application'
 require 'thread'
 
 module Ww
   class Server
+    @@servers = {}
+    @@handler = :webrick
+
     class << self
-      attr_accessor :app
-      attr_accessor :options
+      def servers; @@servers; end
 
-      def start_once
-        app.reset!
-        @current ||= new(app, options).start!
-      end
+      def handler; @@handler; end
+      def handler=(v); @@handler = v; end
+
+      def [](port); @@servers[port] ; end
+      def []=(port, app); @@servers[port] = new(app, port) ; end
+
+      private :new
     end
 
-    def initialize(app, options)
+    attr_reader :app
+
+    def initialize(app, port)
       @app = app
-      @options = {:handler => :webrick, :port => 3080}.merge(options)
-      @handler = ::Rack::Handler.get(@options[:handler])
+      @port = port
+      @handler = ::Rack::Handler.get(self.class.handler)
     end
+
+    def start_once
+      @app.reset!
+      start! unless running?
+    end
+
+    def running?; @running ; end
 
     def start!
       run_with_picking_server_instance!
+      @running = true
       at_exit { shutdown! }
       self
     end
 
     def shutdown!
+      return unless @running
       shutdown_http_server
       @thread.kill if @thread.alive?
+      @running = false
       self
     end
 
     private
     def run_with_picking_server_instance!
       q = Queue.new
-      @thread = Thread.new { @handler.run(@app, :Port => @options[:port]) {|server| q << server } }
+      @thread = Thread.new { @handler.run(@app, :Port => @port) {|server| q << server } }
       @server = q.pop
     end
 

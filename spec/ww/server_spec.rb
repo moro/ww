@@ -29,14 +29,14 @@ describe Ww::Server do
       ignore = URI("http://localhost:3080/hello").read
     end
 
-    subject { Ww::Server[3080].app.current.requests }
+    subject { Ww::Server[3080].requests }
     it { should have(1).items }
     it { subject.first.path.should == "/hello" }
   end
 
   describe "spying POST action" do
     before do
-      Ww::Server[3080].app.current.spy(:post, "/message") { status(200) }
+      Ww::Server[3080].spy(:post, "/message") { status(200) }
 
       Net::HTTP.start("localhost", 3080) do |http|
         post = Net::HTTP::Post.new("/message")
@@ -45,7 +45,7 @@ describe Ww::Server do
         http.request post
       end
     end
-    subject { Ww::Server[3080].app.current.requests.first }
+    subject { Ww::Server[3080].requests.first }
 
     its(:parsed_body) do
       should == {"message" => "I'm double Ruby.", "madeby" => "moro"}
@@ -56,7 +56,7 @@ describe Ww::Server do
     before do
       # validates it's not stubbed.
       URI("http://localhost:3080/goodnight").read.should == "Good night"
-      Ww::Server[3080].app.current.stub(:get, "/goodnight") { "I'm sleepy, too" }
+      Ww::Server[3080].stub(:get, "/goodnight") { "I'm sleepy, too" }
     end
 
     subject { URI("http://localhost:3080/goodnight").read }

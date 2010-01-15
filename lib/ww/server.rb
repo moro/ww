@@ -1,7 +1,10 @@
 require 'thread'
+require 'forwardable'
+require 'ww/double'
 
 module Ww
   class Server
+    extend Forwardable
     @@servers = {}
     @@handler = :webrick
 
@@ -17,6 +20,10 @@ module Ww
       private :new
     end
 
+    def_delegators :current_app, *double_methods = %w[
+      spy requests mock verify stub
+    ]
+
     attr_reader :app
 
     def initialize(app, port)
@@ -30,7 +37,7 @@ module Ww
       start! unless running?
     end
 
-    def running?; @running ; end
+    def running?; !!@running ; end
 
     def start!
       run_with_picking_server_instance!
@@ -61,6 +68,10 @@ module Ww
       else
         @server.stop if @server.respond_to? :stop
       end
+    end
+
+    def current_app
+      app.current
     end
   end
 end

@@ -3,6 +3,7 @@ require 'forwardable'
 require 'ww/double'
 
 module Ww
+  autoload :Application, 'ww/application'
   class Server
     extend Forwardable
     @@servers = {}
@@ -14,10 +15,12 @@ module Ww
       def handler; @@handler; end
       def handler=(v); @@handler = v; end
 
-      def [](port); @@servers[port] ; end
-      def []=(port, app); @@servers[port] = new(app, port) ; end
+      def [](name); @@servers[name] ; end
+      def []=(name, server); @@servers[name] = server ; end
 
-      private :new
+      def build_double(port, &block)
+        new(Application.new(&block), port)
+      end
     end
 
     def_delegators :current_app, *double_methods = %w[

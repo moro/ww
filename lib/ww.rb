@@ -5,7 +5,7 @@ module Ww
   autoload :Servlet, 'ww/servlet'
   autoload :SpyEye,  'ww/spy_eye'
 
-  Version = '0.2.1'
+  Version = '0.2.9'
 
   def to_app(spy_eye_path = "/spy", &block)
     Rack::Builder.new {

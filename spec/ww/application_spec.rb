@@ -20,7 +20,7 @@ describe Ww::Application do
 
   describe "GET /hello (stubbed)" do
     before do
-      @container.stub(:get, "/hello") { response = "Good night" }
+      @container.current.stub(:get, "/hello") { response = "Good night" }
     end
     its(:body) { should == "Good night" }
 

@@ -79,7 +79,7 @@ end
 task :install do
 	name = "#{NAME}-#{VERS}.gem"
 	sh %{rake package}
-	sh %{gem install pkg/#{name}}
+	sh %{gem install --no-rdoc --no-ri pkg/#{name}}
 end
 
 task :uninstall => [:clean] do

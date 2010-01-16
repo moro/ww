@@ -1,22 +1,16 @@
-require 'rubygems'
-require 'rack'
-
 module Ww
-  autoload :Servlet, 'ww/servlet'
-  autoload :SpyEye,  'ww/spy_eye'
-
   Version = '0.2.9'
 
-  def to_app(spy_eye_path = "/spy", &block)
-    Rack::Builder.new {
-      use Rack::ShowExceptions
+  def to_app(*args, &block)
+    $stderr.puts <<-WORNING
+*** DUPLICATION WORNING ***
+Ww.to_app moves to Ww::SpyEye.to_app
 
-      servlet = Servlet.base(&block)
-      spy = SpyEye.new(servlet)
-
-      map(spy_eye_path) { run spy }
-      map("/") { run servlet }
-    }
+This comatibility will be lost on 0.4.0.
+***************************
+WORNING
+    require 'ww/spy_eye'
+    Ww::SpyEye.to_app(*args, &block)
   end
   module_function :to_app
 end

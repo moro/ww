@@ -1,23 +1,22 @@
+= Double Web
 
-= ww
-
-Double Web, framework to build double Web server.
+Framework to build double Web server.
 
 == Description
 
-`ww' helps building Double (Stub, Mock, Spy) Web server using Sinatra.
+`ww' helps building double (Stub, Mock, Spy) Web server using Sinatra.
 
 You can
 - build Double build HTTP server. This is useful, for example, testing with 3rd party API server.
-- define actions using Sinatra API. (Stub)
-- correct and see requests from your app to the double server. (Spy by your Eye)
-
-=== Planning functions
-
-You can
 - launch server from unit test, and reflesh dummy server per testcase.
+- define actions using Sinatra API. (Stub)
 - access corrected requests from your test. (Spy)
 - expect and verify the access from app. (Mock)
+- see collected requests from your app to the double server. (Spy by your Eye)
+
+=== Planning features.
+- more usable mock.
+- support all Sinatra syntax (such as, 'get("/path", options ={})' syntax).
 
 == Installation
 
@@ -30,12 +29,18 @@ You can
  gem install ww
 
 == Synopsis
-build spy server.
+=== Spy::Server
+here is the sample code to use Spy::Server from unit test.
 
- require 'rubygems'
- require 'ww'
+see http://github.com/moro/ww/blob/master/spec/ww/server_integration_spec.rb
 
- app = Ww.to_app do
+=== SpyEye
+
+build spy server. (in example/spy_eye.ru)
+
+ require 'ww/spy_eye'
+
+ app = Ww::SpyEye.to_app do
    spy(:get, "/hello") do
      "Hello World"
    end
@@ -49,13 +54,15 @@ build spy server.
 
 and run commands below;
 
- $ rackup -p 8888 <above_server>.ru
- $ curl -d key=1st http://localhost:8888/hello
- $ curl -d key=2nd http://localhost:8888/hello
+ $ rackup -p 8888 example/spy_eye.ru
  $ curl http://localhost:8888/hello
+ $ curl -d key=1st -d message='KON-NICHIWA'  http://localhost:8888/hello
+ $ curl -d key=2nd -d message='How are you?' http://localhost:8888/hello
  $ open http://localhost:8888/spy # or any browser.
 
 You'll get corrected requests.
+
+see output sample at http://github.com/moro/ww/raw/master/example/spy_eye_output.html
 
 == Copyright
 

@@ -27,7 +27,7 @@ module Ww
       spy requests mock verify stub
     ]
 
-    attr_reader :app
+    attr_reader :app, :port
 
     def initialize(app, port)
       @app = app

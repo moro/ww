@@ -14,6 +14,11 @@ describe Ww::Server do
   end
   subject { Ww::Server[:spec] }
   it { should be_running }
+  it "should works fine" do
+    URI("http://localhost:3080/hello").read.should == "Hello world"
+    URI("http://localhost:3080/goodnight").read.should == "Good night"
+  end
+  its(:port){ should == 3080 }
 
   describe "shutdown!" do
     before do
@@ -30,52 +35,5 @@ describe Ww::Server do
     end
   end
 
-  it do
-    URI("http://localhost:3080/hello").read.should == "Hello world"
-  end
-
-  it do
-    URI("http://localhost:3080/goodnight").read.should == "Good night"
-  end
-
-  describe "store only spy-ed action" do
-    before do
-      ignore = URI("http://localhost:3080/goodnight").read
-      ignore = URI("http://localhost:3080/hello").read
-    end
-
-    subject { Ww::Server[:spec].requests }
-    it { should have(1).items }
-    it { subject.first.path.should == "/hello" }
-  end
-
-  describe "spying POST action" do
-    before do
-      Ww::Server[:spec].spy(:post, "/message") { status(200) }
-
-      Net::HTTP.start("localhost", 3080) do |http|
-        post = Net::HTTP::Post.new("/message")
-        post["Content-Type"] = "application/json"
-        post.body = {:message => "I'm double Ruby.", :madeby => "moro"}.to_json
-        http.request post
-      end
-    end
-    subject { Ww::Server[:spec].requests.first }
-
-    its(:parsed_body) do
-      should == {"message" => "I'm double Ruby.", "madeby" => "moro"}
-    end
-  end
-
-  describe "with stubing" do
-    before do
-      # validates it's not stubbed.
-      URI("http://localhost:3080/goodnight").read.should == "Good night"
-      Ww::Server[:spec].stub(:get, "/goodnight") { "I'm sleepy, too" }
-    end
-
-    subject { URI("http://localhost:3080/goodnight").read }
-    it { should == "I'm sleepy, too" }
-  end
 end
 

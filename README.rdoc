@@ -20,21 +20,21 @@ You can
 
 == Installation
 
+=== Gem Installation
+
+ gem install --source=http://gemcutter.org/ ww
+
 === Archive Installation
 
  rake install
 
-=== Gem Installation
-
- gem install ww
-
 == Synopsis
-=== Spy::Server
+=== Ww::Server
 here is the sample code to use Spy::Server from unit test.
 
 see http://github.com/moro/ww/blob/master/spec/ww/server_integration_spec.rb
 
-=== SpyEye
+=== Ww::SpyEye
 
 build spy server. (in example/spy_eye.ru)
 

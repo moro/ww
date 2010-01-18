@@ -6,17 +6,20 @@ Framework to build double Web server.
 
 `ww' helps building double (Stub, Mock, Spy) Web server using Sinatra.
 
+about 'test double', see the articles below
+- http://xunitpatterns.com/Test%20Double.html
+- http://xunitpatterns.com/Mocks,%20Fakes,%20Stubs%20and%20Dummies.html
+
 You can
 - build Double build HTTP server. This is useful, for example, testing with 3rd party API server.
-- launch server from unit test, and reflesh dummy server per testcase.
+- launch server from unit test, and reset the server per testcase.
 - define actions using Sinatra API. (Stub)
-- access corrected requests from your test. (Spy)
+- correct requests and access them for validation from your test. (Spy)
 - expect and verify the access from app. (Mock)
-- see collected requests from your app to the double server. (Spy by your Eye)
+- see corrected requests from your app to the double server. (Spy by your Eye)
 
-=== Planning features.
-- more usable mock.
-- support all Sinatra syntax (such as, 'get("/path", options ={})' syntax).
+== Planning features.
+see http://github.com/moro/ww/issues
 
 == Installation
 

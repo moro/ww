@@ -61,7 +61,7 @@ spec = Gem::Specification.new do |s|
 	s.add_dependency('json', '>=1.2.0')
 	#s.required_ruby_version = '>= 1.8.2'
 
-	s.files = %w(Rakefile) +
+	s.files = %w(README.rdoc ChangeLog MIT-LICENSE Rakefile) +
 		Dir.glob("{bin,doc,spec,lib,templates,generator,extras,website,script}/**/*") + 
 		Dir.glob("ext/**/*.{h,c,rb}") +
 		Dir.glob("example/**/*") +

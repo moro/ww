@@ -60,8 +60,25 @@ module Ww
     private
     def run_with_picking_server_instance!
       q = Queue.new
-      @thread = Thread.new { @handler.run(@app, :Port => @port) {|server| q << server } }
+      opt = handler_options(@handler)
+      @thread = Thread.new { @handler.run(@app, opt ) {|server| q << silence!(server) } }
       @server = q.pop
+    end
+
+    def handler_options(handler)
+      opt = {:Port => @port}
+      if handler.name == "Rack::Handler::WEBrick"
+        l = WEBrick::Log.new("/dev/null")
+        opt.update(:Logger => l, :AccessLog => [l, WEBrick::AccessLog::COMMON_LOG_FORMAT])
+      end
+      return opt
+    end
+
+    def silence!(server)
+      case server.class.name
+      when "Thin::Server" then server.silent = true
+      end
+      return server
     end
 
     def shutdown_http_server

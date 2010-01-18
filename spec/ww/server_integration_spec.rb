@@ -5,7 +5,7 @@ require 'json'
 
 describe Ww::Server do
   before do
-    Ww::Server.handler = :mongrel # Mongrel is most silent.
+    Ww::Server.handler = :webrick
     Ww::Server[:spec] ||= Ww::Server.build_double(3080) do
       get("/goodnight") { "Good night" }
       spy(:get, "/hello") { "Hello world" }

@@ -3,6 +3,16 @@
   <head>
     <title>3 requests - Double Web</title>
     <script src='http://ajax.googleapis.com/ajax/libs/jquery/1.3.1/jquery.min.js'></script>
+    <script type='text/javascript'>
+      //<![CDATA[
+        $(function(){
+          $(".request .headers h3").click(function(){ $(this).next("table").toggle() });
+          $(".request .body h3").click(function(){ $(this).next("pre").toggle() });
+          $(".request .headers table").hide();
+          $(".request .body pre").hide();
+        });
+      //]]>
+    </script>
     <style type='text/css'>
       body {
         width: 80%;
@@ -11,326 +21,310 @@
       h1 {
         font-size: 10px; }
       
-      div.stump {
+      .request {
         font-size: 10px;
         border: 1px solid silver;
         padding: 0 1em; }
-        div.stump h2 {
+        .request h2 {
           font-size: 10px;
           color: gray; }
-          div.stump h2 span.method, div.stump h2 span.path {
+          .request h2 span.method, .request h2 span.path {
             font-size: 16px;
             font-weight: normal;
             font-family: 'Courier', monospace; }
-          div.stump h2 span.method {
+          .request h2 span.method {
             color: #090; }
-          div.stump h2 span.path {
+          .request h2 span.path {
             color: black; }
-          div.stump h2 span.time, div.stump h2 span.source {
+          .request h2 span.time, .request h2 span.source {
             color: blue; }
-        div.stump h3 {
+        .request h3 {
           font-size: small;
           border-bottom: 1px solid green;
           background: #cfb;
           padding: 2px 0 0 2px; }
-          div.stump h3 span.media_type {
+          .request h3 span.media_type {
             color: blue;
             font-size: small;
             font-weight: normal;
             font-family: 'Courier', monospace; }
-        div.stump .headers table, div.stump div.body pre {
+        .request .headers table, .request .body pre {
           border: 1px dashed green;
           margin: 1em;
           padding: 1em; }
-        div.stump div.body pre {
+        .request .body pre {
           overflow: auto;
           font-size: 12px; }
     </style>
   </head>
   <body>
     <h1>3 requests - Double Web</h1>
-    <div class='stump' id='13699160'>
+    <div class='request' id='13725230'>
       <h2>
         <span class='method'>POST</span>
         <span class='path'>/hello</span>
         on
-        <span class='time'>2010-01-16T23:57:01+09:00</span>
+        <span class='time'>2010-01-18T18:25:13+09:00</span>
         from
         <span class='source'>127.0.0.1</span>
       </h2>
-      <div>
-        <div class='headers'>
-          <h3>Headers</h3>
-          <table>
-            <tr>
-              <th>HTTP_ACCEPT</th>
-              <td>*/*</td>
-            </tr>
-            <tr>
-              <th>HTTP_HOST</th>
-              <td>localhost:8888</td>
-            </tr>
-            <tr>
-              <th>SERVER_NAME</th>
-              <td>localhost</td>
-            </tr>
-            <tr>
-              <th>CONTENT_LENGTH</th>
-              <td>28</td>
-            </tr>
-            <tr>
-              <th>HTTP_USER_AGENT</th>
-              <td>curl/7.19.5 (i386-apple-darwin9.7.0) libcurl/7.19.5 OpenSSL/0.9.8k zlib/1.2.3</td>
-            </tr>
-            <tr>
-              <th>REQUEST_PATH</th>
-              <td>/hello</td>
-            </tr>
-            <tr>
-              <th>SERVER_PROTOCOL</th>
-              <td>HTTP/1.1</td>
-            </tr>
-            <tr>
-              <th>CONTENT_TYPE</th>
-              <td>application/x-www-form-urlencoded</td>
-            </tr>
-            <tr>
-              <th>REMOTE_ADDR</th>
-              <td>127.0.0.1</td>
-            </tr>
-            <tr>
-              <th>PATH_INFO</th>
-              <td>/hello</td>
-            </tr>
-            <tr>
-              <th>SERVER_SOFTWARE</th>
-              <td>thin 1.2.5 codename This Is Not A Web Server</td>
-            </tr>
-            <tr>
-              <th>SCRIPT_NAME</th>
-              <td></td>
-            </tr>
-            <tr>
-              <th>HTTP_VERSION</th>
-              <td>HTTP/1.1</td>
-            </tr>
-            <tr>
-              <th>REQUEST_URI</th>
-              <td>/hello</td>
-            </tr>
-            <tr>
-              <th>SERVER_PORT</th>
-              <td>8888</td>
-            </tr>
-            <tr>
-              <th>REQUEST_METHOD</th>
-              <td>POST</td>
-            </tr>
-            <tr>
-              <th>QUERY_STRING</th>
-              <td></td>
-            </tr>
-            <tr>
-              <th>GATEWAY_INTERFACE</th>
-              <td>CGI/1.2</td>
-            </tr>
-          </table>
-        </div>
-        <div class='body'>
-          <h3>
-            Body
-            <span class='media_type'>application/x-www-form-urlencoded</span>
-          </h3>
-          <pre>{&quot;message&quot;=&gt;&quot;How are you?&quot;, &quot;key&quot;=&gt;&quot;2nd&quot;}</pre>
-        </div>
+      <div class='headers'>
+        <h3>Headers</h3>
+        <table>
+          <tr>
+            <th>HTTP_ACCEPT</th>
+            <td>*/*</td>
+          </tr>
+          <tr>
+            <th>HTTP_HOST</th>
+            <td>localhost:8888</td>
+          </tr>
+          <tr>
+            <th>SERVER_NAME</th>
+            <td>localhost</td>
+          </tr>
+          <tr>
+            <th>CONTENT_LENGTH</th>
+            <td>28</td>
+          </tr>
+          <tr>
+            <th>HTTP_USER_AGENT</th>
+            <td>curl/7.19.5 (i386-apple-darwin9.7.0) libcurl/7.19.5 OpenSSL/0.9.8k zlib/1.2.3</td>
+          </tr>
+          <tr>
+            <th>REQUEST_PATH</th>
+            <td>/hello</td>
+          </tr>
+          <tr>
+            <th>SERVER_PROTOCOL</th>
+            <td>HTTP/1.1</td>
+          </tr>
+          <tr>
+            <th>CONTENT_TYPE</th>
+            <td>application/x-www-form-urlencoded</td>
+          </tr>
+          <tr>
+            <th>REMOTE_ADDR</th>
+            <td>127.0.0.1</td>
+          </tr>
+          <tr>
+            <th>PATH_INFO</th>
+            <td>/hello</td>
+          </tr>
+          <tr>
+            <th>SERVER_SOFTWARE</th>
+            <td>thin 1.2.5 codename This Is Not A Web Server</td>
+          </tr>
+          <tr>
+            <th>SCRIPT_NAME</th>
+            <td></td>
+          </tr>
+          <tr>
+            <th>HTTP_VERSION</th>
+            <td>HTTP/1.1</td>
+          </tr>
+          <tr>
+            <th>REQUEST_URI</th>
+            <td>/hello</td>
+          </tr>
+          <tr>
+            <th>SERVER_PORT</th>
+            <td>8888</td>
+          </tr>
+          <tr>
+            <th>REQUEST_METHOD</th>
+            <td>POST</td>
+          </tr>
+          <tr>
+            <th>QUERY_STRING</th>
+            <td></td>
+          </tr>
+          <tr>
+            <th>GATEWAY_INTERFACE</th>
+            <td>CGI/1.2</td>
+          </tr>
+        </table>
+      </div>
+      <div class='body'>
+        <h3>
+          Body
+          <span class='media_type'>application/x-www-form-urlencoded</span>
+        </h3>
+        <pre>{&quot;message&quot;=&gt;&quot;How are you?&quot;, &quot;key&quot;=&gt;&quot;2nd&quot;}</pre>
       </div>
     </div>
-    <div class='stump' id='13730530'>
+    <div class='request' id='13756600'>
       <h2>
         <span class='method'>POST</span>
         <span class='path'>/hello</span>
         on
-        <span class='time'>2010-01-16T23:57:01+09:00</span>
+        <span class='time'>2010-01-18T18:25:08+09:00</span>
         from
         <span class='source'>127.0.0.1</span>
       </h2>
-      <div>
-        <div class='headers'>
-          <h3>Headers</h3>
-          <table>
-            <tr>
-              <th>HTTP_ACCEPT</th>
-              <td>*/*</td>
-            </tr>
-            <tr>
-              <th>HTTP_HOST</th>
-              <td>localhost:8888</td>
-            </tr>
-            <tr>
-              <th>SERVER_NAME</th>
-              <td>localhost</td>
-            </tr>
-            <tr>
-              <th>CONTENT_LENGTH</th>
-              <td>27</td>
-            </tr>
-            <tr>
-              <th>HTTP_USER_AGENT</th>
-              <td>curl/7.19.5 (i386-apple-darwin9.7.0) libcurl/7.19.5 OpenSSL/0.9.8k zlib/1.2.3</td>
-            </tr>
-            <tr>
-              <th>REQUEST_PATH</th>
-              <td>/hello</td>
-            </tr>
-            <tr>
-              <th>SERVER_PROTOCOL</th>
-              <td>HTTP/1.1</td>
-            </tr>
-            <tr>
-              <th>CONTENT_TYPE</th>
-              <td>application/x-www-form-urlencoded</td>
-            </tr>
-            <tr>
-              <th>REMOTE_ADDR</th>
-              <td>127.0.0.1</td>
-            </tr>
-            <tr>
-              <th>PATH_INFO</th>
-              <td>/hello</td>
-            </tr>
-            <tr>
-              <th>SERVER_SOFTWARE</th>
-              <td>thin 1.2.5 codename This Is Not A Web Server</td>
-            </tr>
-            <tr>
-              <th>SCRIPT_NAME</th>
-              <td></td>
-            </tr>
-            <tr>
-              <th>HTTP_VERSION</th>
-              <td>HTTP/1.1</td>
-            </tr>
-            <tr>
-              <th>REQUEST_URI</th>
-              <td>/hello</td>
-            </tr>
-            <tr>
-              <th>SERVER_PORT</th>
-              <td>8888</td>
-            </tr>
-            <tr>
-              <th>REQUEST_METHOD</th>
-              <td>POST</td>
-            </tr>
-            <tr>
-              <th>QUERY_STRING</th>
-              <td></td>
-            </tr>
-            <tr>
-              <th>GATEWAY_INTERFACE</th>
-              <td>CGI/1.2</td>
-            </tr>
-          </table>
-        </div>
-        <div class='body'>
-          <h3>
-            Body
-            <span class='media_type'>application/x-www-form-urlencoded</span>
-          </h3>
-          <pre>{&quot;message&quot;=&gt;&quot;KON-NICHIWA&quot;, &quot;key&quot;=&gt;&quot;1st&quot;}</pre>
-        </div>
+      <div class='headers'>
+        <h3>Headers</h3>
+        <table>
+          <tr>
+            <th>HTTP_ACCEPT</th>
+            <td>*/*</td>
+          </tr>
+          <tr>
+            <th>HTTP_HOST</th>
+            <td>localhost:8888</td>
+          </tr>
+          <tr>
+            <th>SERVER_NAME</th>
+            <td>localhost</td>
+          </tr>
+          <tr>
+            <th>CONTENT_LENGTH</th>
+            <td>27</td>
+          </tr>
+          <tr>
+            <th>HTTP_USER_AGENT</th>
+            <td>curl/7.19.5 (i386-apple-darwin9.7.0) libcurl/7.19.5 OpenSSL/0.9.8k zlib/1.2.3</td>
+          </tr>
+          <tr>
+            <th>REQUEST_PATH</th>
+            <td>/hello</td>
+          </tr>
+          <tr>
+            <th>SERVER_PROTOCOL</th>
+            <td>HTTP/1.1</td>
+          </tr>
+          <tr>
+            <th>CONTENT_TYPE</th>
+            <td>application/x-www-form-urlencoded</td>
+          </tr>
+          <tr>
+            <th>REMOTE_ADDR</th>
+            <td>127.0.0.1</td>
+          </tr>
+          <tr>
+            <th>PATH_INFO</th>
+            <td>/hello</td>
+          </tr>
+          <tr>
+            <th>SERVER_SOFTWARE</th>
+            <td>thin 1.2.5 codename This Is Not A Web Server</td>
+          </tr>
+          <tr>
+            <th>SCRIPT_NAME</th>
+            <td></td>
+          </tr>
+          <tr>
+            <th>HTTP_VERSION</th>
+            <td>HTTP/1.1</td>
+          </tr>
+          <tr>
+            <th>REQUEST_URI</th>
+            <td>/hello</td>
+          </tr>
+          <tr>
+            <th>SERVER_PORT</th>
+            <td>8888</td>
+          </tr>
+          <tr>
+            <th>REQUEST_METHOD</th>
+            <td>POST</td>
+          </tr>
+          <tr>
+            <th>QUERY_STRING</th>
+            <td></td>
+          </tr>
+          <tr>
+            <th>GATEWAY_INTERFACE</th>
+            <td>CGI/1.2</td>
+          </tr>
+        </table>
+      </div>
+      <div class='body'>
+        <h3>
+          Body
+          <span class='media_type'>application/x-www-form-urlencoded</span>
+        </h3>
+        <pre>{&quot;message&quot;=&gt;&quot;KON-NICHIWA&quot;, &quot;key&quot;=&gt;&quot;1st&quot;}</pre>
       </div>
     </div>
-    <div class='stump' id='13760510'>
+    <div class='request' id='13786580'>
       <h2>
         <span class='method'>GET</span>
         <span class='path'>/hello</span>
         on
-        <span class='time'>2010-01-16T23:57:01+09:00</span>
+        <span class='time'>2010-01-18T18:24:49+09:00</span>
         from
         <span class='source'>127.0.0.1</span>
       </h2>
-      <div>
-        <div class='headers'>
-          <h3>Headers</h3>
-          <table>
-            <tr>
-              <th>HTTP_ACCEPT</th>
-              <td>*/*</td>
-            </tr>
-            <tr>
-              <th>HTTP_HOST</th>
-              <td>localhost:8888</td>
-            </tr>
-            <tr>
-              <th>SERVER_NAME</th>
-              <td>localhost</td>
-            </tr>
-            <tr>
-              <th>HTTP_USER_AGENT</th>
-              <td>curl/7.19.5 (i386-apple-darwin9.7.0) libcurl/7.19.5 OpenSSL/0.9.8k zlib/1.2.3</td>
-            </tr>
-            <tr>
-              <th>REQUEST_PATH</th>
-              <td>/hello</td>
-            </tr>
-            <tr>
-              <th>SERVER_PROTOCOL</th>
-              <td>HTTP/1.1</td>
-            </tr>
-            <tr>
-              <th>REMOTE_ADDR</th>
-              <td>127.0.0.1</td>
-            </tr>
-            <tr>
-              <th>PATH_INFO</th>
-              <td>/hello</td>
-            </tr>
-            <tr>
-              <th>SERVER_SOFTWARE</th>
-              <td>thin 1.2.5 codename This Is Not A Web Server</td>
-            </tr>
-            <tr>
-              <th>SCRIPT_NAME</th>
-              <td></td>
-            </tr>
-            <tr>
-              <th>HTTP_VERSION</th>
-              <td>HTTP/1.1</td>
-            </tr>
-            <tr>
-              <th>REQUEST_URI</th>
-              <td>/hello</td>
-            </tr>
-            <tr>
-              <th>SERVER_PORT</th>
-              <td>8888</td>
-            </tr>
-            <tr>
-              <th>REQUEST_METHOD</th>
-              <td>GET</td>
-            </tr>
-            <tr>
-              <th>QUERY_STRING</th>
-              <td></td>
-            </tr>
-            <tr>
-              <th>GATEWAY_INTERFACE</th>
-              <td>CGI/1.2</td>
-            </tr>
-          </table>
-        </div>
+      <div class='headers'>
+        <h3>Headers</h3>
+        <table>
+          <tr>
+            <th>HTTP_ACCEPT</th>
+            <td>*/*</td>
+          </tr>
+          <tr>
+            <th>HTTP_HOST</th>
+            <td>localhost:8888</td>
+          </tr>
+          <tr>
+            <th>SERVER_NAME</th>
+            <td>localhost</td>
+          </tr>
+          <tr>
+            <th>HTTP_USER_AGENT</th>
+            <td>curl/7.19.5 (i386-apple-darwin9.7.0) libcurl/7.19.5 OpenSSL/0.9.8k zlib/1.2.3</td>
+          </tr>
+          <tr>
+            <th>REQUEST_PATH</th>
+            <td>/hello</td>
+          </tr>
+          <tr>
+            <th>SERVER_PROTOCOL</th>
+            <td>HTTP/1.1</td>
+          </tr>
+          <tr>
+            <th>REMOTE_ADDR</th>
+            <td>127.0.0.1</td>
+          </tr>
+          <tr>
+            <th>PATH_INFO</th>
+            <td>/hello</td>
+          </tr>
+          <tr>
+            <th>SERVER_SOFTWARE</th>
+            <td>thin 1.2.5 codename This Is Not A Web Server</td>
+          </tr>
+          <tr>
+            <th>SCRIPT_NAME</th>
+            <td></td>
+          </tr>
+          <tr>
+            <th>HTTP_VERSION</th>
+            <td>HTTP/1.1</td>
+          </tr>
+          <tr>
+            <th>REQUEST_URI</th>
+            <td>/hello</td>
+          </tr>
+          <tr>
+            <th>SERVER_PORT</th>
+            <td>8888</td>
+          </tr>
+          <tr>
+            <th>REQUEST_METHOD</th>
+            <td>GET</td>
+          </tr>
+          <tr>
+            <th>QUERY_STRING</th>
+            <td></td>
+          </tr>
+          <tr>
+            <th>GATEWAY_INTERFACE</th>
+            <td>CGI/1.2</td>
+          </tr>
+        </table>
       </div>
     </div>
   </body>
 </html>
-<script type='text/javascript'>
-  //<![CDATA[
-    jQuery(function(){
-      $("div.stump .headers h3").click(function(){ $(this).next("table").toggle() });
-      $("div.stump .body h3").click(function(){ $(this).next("pre").toggle() });
-      $("div.stump .headers table").hide();
-      $("div.stump .body pre").hide();
-    });
-  //]]>
-</script>

@@ -67,6 +67,10 @@ You'll get corrected requests.
 
 see output sample at http://github.com/moro/ww/raw/master/example/spy_eye_output.html
 
+== Acknowledgements
+
+ww's development has been supported by Eiwa System Management,Inc.
+
 == Copyright
 
 Author::    MOROHASHI Kyosuke <moronatural@gmail.com>

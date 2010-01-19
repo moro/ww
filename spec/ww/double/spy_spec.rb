@@ -39,10 +39,11 @@ describe Ww::Double, "with Servlet" do
     end
   end
 
-  describe "spy(:get, '/') backword compat" do
+  describe "spy(:get, '/') backword compat, old version spy! or spy(:get..) called stump!" do
     before do
       @server.get('/backword') do
         stump!
+
         response.status = 200
         response["Content-Type"] = "text/plain"
         response.body = "Hi World"
@@ -55,6 +56,17 @@ describe Ww::Double, "with Servlet" do
     subject{ @server.requests }
     it { should_not be_empty }
     it { @server.requests.first.should be_a Ww::Double::Spy::Request }
+  end
+
+  describe "spy_them_all! - extend spy feature to all actions" do
+    before do
+      @server.spy_them_all!
+      app = @server.new
+      3.times{ app.call( Rack::MockRequest.env_for("/", :method => "GET")) }
+    end
+    subject{ @server }
+
+    it { should have(3).requests }
   end
 end
 

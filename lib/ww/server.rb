@@ -24,7 +24,7 @@ module Ww
     end
 
     def_delegators :current_app, *double_methods = %w[
-      spy requests mock verify stub
+      spy spy_them_all! requests mock verify stub
     ]
 
     attr_reader :app, :port

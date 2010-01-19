@@ -13,6 +13,10 @@ module Ww
         end
       end
 
+      def spy_them_all!
+        before { spy! }
+      end
+
       def requests
         @requests ||= Store.new
       end

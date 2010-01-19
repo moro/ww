@@ -6,66 +6,15 @@ Framework to build double Web server.
 
 `ww' helps building double (Stub, Mock, Spy) Web server using Sinatra.
 
-about 'test double', see the articles below
-- http://xunitpatterns.com/Test%20Double.html
-- http://xunitpatterns.com/Mocks,%20Fakes,%20Stubs%20and%20Dummies.html
-
-You can
-- build Double build HTTP server. This is useful, for example, testing with 3rd party API server.
-- launch server from unit test, and reset the server per testcase.
-- define actions using Sinatra API. (Stub)
-- correct requests and access them for validation from your test. (Spy)
-- expect and verify the access from app. (Mock)
-- see corrected requests from your app to the double server. (Spy by your Eye)
+for details see http://wiki.github.com/esminc/ww/
 
 == Planning features.
+
 see http://github.com/moro/ww/issues
 
 == Installation
 
-=== Gem Installation
-
  gem install --source=http://gemcutter.org/ ww
-
-=== Archive Installation
-
- rake install
-
-== Synopsis
-=== Ww::Server
-here is the sample code to use Spy::Server from unit test.
-
-see http://github.com/moro/ww/blob/master/spec/ww/server_integration_spec.rb
-
-=== Ww::SpyEye
-
-build spy server. (in example/spy_eye.ru)
-
- require 'ww/spy_eye'
-
- app = Ww::SpyEye.to_app do
-   spy(:get, "/hello") do
-     "Hello World"
-   end
-
-   spy(:post, "/hello") do
-     redirect "/hello"
-   end
- end
-
- run app
-
-and run commands below;
-
- $ rackup -p 8888 example/spy_eye.ru
- $ curl http://localhost:8888/hello
- $ curl -d key=1st -d message='KON-NICHIWA'  http://localhost:8888/hello
- $ curl -d key=2nd -d message='How are you?' http://localhost:8888/hello
- $ open http://localhost:8888/spy # or any browser.
-
-You'll get corrected requests.
-
-see output sample at http://github.com/moro/ww/raw/master/example/spy_eye_output.html
 
 == Acknowledgements
 

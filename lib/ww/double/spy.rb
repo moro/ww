@@ -27,7 +27,7 @@ module Ww
 
       module InstanceMethods
         def spy!
-          self.class.store(@request)
+          self.class.store(@request) if @spyed ^ (@spyed = true)
         end
         alias stump! spy!
       end

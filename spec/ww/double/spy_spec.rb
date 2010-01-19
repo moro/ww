@@ -61,12 +61,20 @@ describe Ww::Double, "with Servlet" do
   describe "spy_them_all! - extend spy feature to all actions" do
     before do
       @server.spy_them_all!
-      app = @server.new
-      3.times{ app.call( Rack::MockRequest.env_for("/", :method => "GET")) }
+      @app = @server.new
+      3.times{ @app.call( Rack::MockRequest.env_for("/", :method => "GET")) }
     end
     subject{ @server }
 
     it { should have(3).requests }
+
+    describe "do-not collect if already collected" do
+      before do
+        @server.spy(:get, '/spyed'){ "Hello" }
+        @app.call( Rack::MockRequest.env_for("/spyed", :method => "GET"))
+      end
+      it { should have(3 + 1).requests }
+    end
   end
 end
 

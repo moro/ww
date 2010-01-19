@@ -37,6 +37,7 @@ module Ww
 
     def start_once
       @app.reset!
+      current_app.testing_thread = Thread.current
       start! unless running?
     end
 

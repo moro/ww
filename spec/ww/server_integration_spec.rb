@@ -69,5 +69,26 @@ describe Ww::Server do
       expect{ Ww::Server[:spec].verify }.should raise_error Ww::Double::MockError
     end
   end
+
+  describe "mocking with verifying expectation" do
+    before do
+      v = lambda {|req,par| par["key"] == "value" }
+      Ww::Server[:spec].mock(:get, "/goodnight", :verify => v) do
+        "OYASUMI-NASAI"
+      end
+    end
+
+    it "fail unless access there" do
+      expect{
+        URI("http://localhost:3080/goodnight").read
+      }.should raise_error Ww::Double::MockError
+    end
+
+    it "pass if access there" do
+      expect{
+        URI("http://localhost:3080/goodnight?key=value").read
+      }.should_not raise_error
+    end
+  end
 end
 

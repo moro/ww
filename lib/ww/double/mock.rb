@@ -6,15 +6,16 @@ module Ww
         def executed?; !!@e; end
         attr_reader :identifier
 
-        def initialize(verb, path, options)
+        def initialize(verb, path, verifier = nil)
           @identifier = "_mock_ #{verb.to_s.upcase} #{path}"
-          @verifyer = options[:verify]
+          @verifier = verifier
         end
 
-        def expecting_request?(request)
-          return true unless @verifyer
-          r = request.dup
-          @verifyer.call(r, r.params)
+        def verify(request, testing_thread = nil)
+          return true unless @verifier && testing_thread # no need to verify
+          return true if @verifier.call(r = request.dup, r.params)
+
+          testing_thread.raise MockError
         end
       end
 
@@ -27,15 +28,14 @@ module Ww
       end
 
       def mock(verb, path, options = {}, &block)
-        expectations << (expect = Expectation.new(verb, path, options))
+        expect = Expectation.new(verb, path, options.delete(:verify))
+        expectations << expect
         action = Double.unbound_action(self, expect.identifier, block)
 
         stub(verb, path) do |*args|
+          expect.verify(request, self.class.testing_thread)
           expect.executed!
-          unless expect.expecting_request?(request)
-            tt = self.class.testing_thread
-            tt && tt.raise(MockError)
-          end
+
           action.bind(self).call(*args)
         end
       end

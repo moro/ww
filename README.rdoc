@@ -16,6 +16,16 @@ see http://github.com/moro/ww/issues
 
  gem install --source=http://gemcutter.org/ ww
 
+=== Old version
+
+if you prefer old version of ww, get it from GitHub's `Download' tabs.
+
+ $ curl http://github.com/moro/ww/tarball/v#{version} -o ww-#{version}.tar.gz
+ $ tar xzf ww-#{version}.tar.gz
+ $ cd moro-ww-#{sha1}/
+ $ gem build ww-#{version}.gemspec
+ $ gem install -l ./ww-#{version}.gem
+
 == Acknowledgements
 
 ww's development has been supported by Eiwa System Management,Inc.

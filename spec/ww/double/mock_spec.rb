@@ -6,11 +6,11 @@ describe Ww::Double::Mock, "with Servlet" do
     @server = servlet_defining_get_root
   end
 
-  describe "mock(:get, '/', :verify => lambda" do
+  describe "mock{ verify }.get('/')" do
     before do
-      v = Proc.new {|req, par| par["entity_id"].to_i == 1 && par["entity_value"] == "var" }
-
-      @server.mock( :get, '/', :verify => v) do
+      @server.mock{|req, prm|
+        prm["entity_id"].to_i == 1 && prm["entity_value"] == "var"
+      }.get('/') do
         response.status = 200
         response["Content-Type"] = "text/plain"
         response.body = "Hi World"
@@ -29,9 +29,9 @@ describe Ww::Double::Mock, "with Servlet" do
     end
   end
 
-  describe "mock(:get, '/')" do
+  describe "mock.get('/') # expect called w/anything" do
     before do
-      @server.mock(:get, '/') do
+      @server.mock.get('/') do
         response.status = 200
         response["Content-Type"] = "text/plain"
         response.body = "Hi World"

@@ -1,3 +1,5 @@
+require 'forwardable'
+
 module Ww
   module Double
     module Mock
@@ -27,24 +29,60 @@ module Ww
         @testing_thread
       end
 
-      def mock(verb, path, options = {}, &block)
-        expect = Expectation.new(verb, path, options.delete(:verify))
-        expectations << expect
-        action = Double.unbound_action(self, expect.identifier, block)
-
-        stub(verb, path) do |*args|
-          expect.verify(request, self.class.testing_thread)
-          expect.executed!
-
-          action.bind(self).call(*args)
+      class DoubleDefinitionProxy
+        attr_reader :servlet
+        def initialize(servlet)
+          @servlet = servlet
         end
+
+        %w[get post put delete].each do |verb|
+          class_eval <<-RUBY
+            def #{verb}(path, options = {}, &action)
+              define_action(:#{verb}, path, options, &action)
+            end
+          RUBY
+        end
+
+        private
+        def define_action(verb, path, options = {}, &action)
+          raise NotImplementedError, "override me"
+        end
+      end
+
+      class MockDefinitionProxy < DoubleDefinitionProxy
+        def initialize(servlet, &block)
+          super(servlet)
+          @verification = block
+        end
+
+        private
+        def expectation_for(verb, path, options)
+          Expectation.new(verb, path, @verification)
+        end
+
+        def define_action(verb, path, options = {}, &action)
+          expect = expectation_for(verb, path, options)
+          servlet.expectations << expect
+          action = Double.unbound_action(servlet, expect.identifier, action)
+
+          # FIXME
+          servlet.stub(verb, path) do |*args|
+            expect.verify(request, self.class.testing_thread)
+            expect.executed!
+
+            action.bind(self).call(*args)
+          end
+        end
+      end
+
+      def mock(&block)
+        MockDefinitionProxy.new(self, &block)
       end
 
       def verify
         raise MockError unless expectations.all? {|mock| mock.executed? }
       end
 
-      private
       def expectations
         @expectations ||= []
       end

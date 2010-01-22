@@ -6,9 +6,9 @@ describe Ww::Double, "with Servlet" do
     @server = servlet_defining_get_root
   end
 
-  describe "spy(:get, '/')" do
+  describe "spy.get('/')" do
     before do
-      @server.spy(:get, '/') do
+      @server.spy.get('/') do
         response.status = 200
         response["Content-Type"] = "text/plain"
         response.body = "Hi World"
@@ -39,7 +39,7 @@ describe Ww::Double, "with Servlet" do
     end
   end
 
-  describe "spy(:get, '/') backword compat, old version spy! or spy(:get..) called stump!" do
+  describe "get('/') backword compat, old version spy! or spy(:get..) called stump!" do
     before do
       @server.get('/backword') do
         stump!
@@ -70,7 +70,7 @@ describe Ww::Double, "with Servlet" do
 
     describe "do-not collect if already collected" do
       before do
-        @server.spy(:get, '/spyed'){ "Hello" }
+        @server.spy.get('/spyed'){ "Hello" }
         @app.call( Rack::MockRequest.env_for("/spyed", :method => "GET"))
       end
       it { should have(3 + 1).requests }

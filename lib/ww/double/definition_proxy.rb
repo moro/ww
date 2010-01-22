@@ -7,7 +7,7 @@ module Ww
       end
 
       %w[get post put delete].each do |verb|
-        class_eval <<-RUBY
+        class_eval <<-RUBY, __FILE__, __LINE__
           def #{verb}(path, options = {}, &action)
             define_action(:#{verb}, path, options, &action)
           end

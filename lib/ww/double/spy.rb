@@ -4,13 +4,21 @@ require 'ww/double/spy/request'
 module Ww
   module Double
     module Spy
-      def spy(verb, path, &block)
-        action = Double.unbound_action(self, "_spy_ #{verb.to_s.upcase} #{path}", block)
+      class DefinitionProxy < Double::DefinitionProxy
+        private
+        def define_action(verb, path, options = {}, &action)
+          ident =  "_spy_ #{verb.to_s.upcase} #{path}"
+          action = unbound_action(servlet, ident, action)
 
-        stub(verb, path) do |*args|
-          spy!
-          action.bind(self).call(*args)
+          servlet.stub.send(verb, path, options) do |*args|
+            spy!
+            action.bind(self).call(*args)
+          end
         end
+      end
+
+      def spy
+        Spy::DefinitionProxy.new(self)
       end
 
       def spy_them_all!

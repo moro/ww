@@ -1,4 +1,5 @@
 require 'forwardable'
+require 'ww/double/definition_proxy'
 
 module Ww
   module Double
@@ -29,27 +30,7 @@ module Ww
         @testing_thread
       end
 
-      class DoubleDefinitionProxy
-        attr_reader :servlet
-        def initialize(servlet)
-          @servlet = servlet
-        end
-
-        %w[get post put delete].each do |verb|
-          class_eval <<-RUBY
-            def #{verb}(path, options = {}, &action)
-              define_action(:#{verb}, path, options, &action)
-            end
-          RUBY
-        end
-
-        private
-        def define_action(verb, path, options = {}, &action)
-          raise NotImplementedError, "override me"
-        end
-      end
-
-      class MockDefinitionProxy < DoubleDefinitionProxy
+      class MockDefinitionProxy < DefinitionProxy
         def initialize(servlet, &block)
           super(servlet)
           @verification = block
@@ -63,7 +44,7 @@ module Ww
         def define_action(verb, path, options = {}, &action)
           expect = expectation_for(verb, path, options)
           servlet.expectations << expect
-          action = Double.unbound_action(servlet, expect.identifier, action)
+          action = unbound_action(servlet, expect.identifier, action)
 
           # FIXME
           servlet.stub(verb, path) do |*args|

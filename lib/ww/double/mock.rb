@@ -46,8 +46,7 @@ module Ww
           servlet.expectations << expect
           action = unbound_action(servlet, expect.identifier, action)
 
-          # FIXME
-          servlet.stub(verb, path) do |*args|
+          servlet.stub.send(verb, path, options) do |*args|
             expect.verify(request, self.class.testing_thread)
             expect.executed!
 

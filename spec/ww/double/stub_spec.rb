@@ -6,9 +6,9 @@ describe Ww::Double::Stub, "included to Servlet" do
     @server = servlet_defining_get_root
   end
 
-  describe "stub(:get, '/dynamic_add')" do
+  describe "stub.get('/dynamic_add')" do
     before do
-      @server.stub(:get, '/dynamic_add') do
+      @server.stub.get('/dynamic_add') do
         response.status = 200
         response["Content-Type"] = "text/plain"
         response.body = "Hi World"
@@ -22,9 +22,9 @@ describe Ww::Double::Stub, "included to Servlet" do
     it { should == [200, {"Content-Type"=>"text/plain", "Content-Length"=>"8"}, ["Hi World"]] }
   end
 
-  describe "stub(:get, '/') # override" do
+  describe "stub.get('/') # override" do
     before do
-      @server.stub(:get, '/') do
+      @server.stub.get('/') do
         response.status = 200
         response["Content-Type"] = "text/plain"
         response.body = "Hi World"
@@ -38,11 +38,11 @@ describe Ww::Double::Stub, "included to Servlet" do
     it { should == [200, {"Content-Type"=>"text/plain", "Content-Length"=>"8"}, ["Hi World"]] }
   end
 
-  describe "stub(:get, '/') # re-define after app initialized" do
+  describe "stub.get('/') # re-define after app initialized" do
     before do
       @app = @server.new
 
-      @server.stub(:get, '/') do
+      @server.stub.get('/') do
         response.status = 200
         response["Content-Type"] = "text/plain"
         response.body = "Hi! World"

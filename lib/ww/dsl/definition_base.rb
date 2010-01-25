@@ -1,6 +1,6 @@
 module Ww
-  module Double
-    class DefinitionProxy
+  module Dsl
+    class DefinitionBase
       attr_reader :servlet
       def initialize(servlet)
         @servlet = servlet
@@ -29,7 +29,6 @@ module Ww
           end
         end
       end
-    end # class
+    end
   end
 end
-

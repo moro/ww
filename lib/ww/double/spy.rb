@@ -1,24 +1,12 @@
 require 'ww/store'
 require 'ww/double/spy/request'
+require 'ww/dsl/spy_definition'
 
 module Ww
   module Double
     module Spy
-      class DefinitionProxy < Double::DefinitionProxy
-        private
-        def define_action(verb, path, options = {}, &action)
-          ident =  "_spy_ #{verb.to_s.upcase} #{path}"
-          action = unbound_action(servlet, ident, action)
-
-          servlet.stub.send(verb, path, options) do |*args|
-            spy!
-            action.bind(self).call(*args)
-          end
-        end
-      end
-
       def spy
-        Spy::DefinitionProxy.new(self)
+        Dsl::SpyDefinition.new(self)
       end
 
       def spy_them_all!

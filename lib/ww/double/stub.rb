@@ -1,22 +1,10 @@
-require 'ww/double/definition_proxy'
+require 'ww/dsl/stub_definition'
 
 module Ww
   module Double
     module Stub
-      class DefinitionProxy < Double::DefinitionProxy
-        private
-        def define_action(verb, path, options = {}, &action)
-          v = verb.to_s.upcase
-          servlet.synchronize do
-            servlet.send(verb, path, options, &action)
-            routes = servlet.routes
-            routes[v].unshift(routes[v].pop)
-          end
-        end
-      end
-
       def stub
-        Stub::DefinitionProxy.new(self)
+        Dsl::StubDefinition.new(self)
       end
     end
   end

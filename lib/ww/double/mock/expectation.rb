@@ -32,13 +32,20 @@ module Ww
         def _verify(request)
           case @verifier
           when Proc then @verifier.call(request.dup, request.params)
-          when Hash then verify_by_hash(@verifier, request.params)
+          when Hash
+            params = @verifier.dup
+            header = params.delete(:header) || {}
+
+            verify_by_hash(params, request.params) &&
+            verify_by_hash(header, request.env, true)
           end
         end
 
-        def verify_by_hash(expectations, actuals)
+        def verify_by_hash(expectations, actuals, upcase_key = false)
           expectations.all? do |key, value|
-            hash_expectation_match?(value, actuals[key.to_s])
+            key = key.to_s
+            key = key.upcase if upcase_key
+            hash_expectation_match?(value, actuals[key])
           end
         end
 

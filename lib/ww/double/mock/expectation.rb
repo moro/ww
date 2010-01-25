@@ -12,10 +12,37 @@ module Ww
 
         def verify(request, testing_thread = nil)
           @executed = true
-          return @executed unless @verifier && testing_thread # no need to verify
-          return @executed if @verifier.call(r = request.dup, r.params)
+          return true unless need_to_verify?(testing_thread)
 
-          testing_thread.raise MockError
+          passed, message = _verify(request.dup)
+          return true if passed
+
+          testing_thread.raise MockError, message
+        end
+
+        private
+        def need_to_verify?(testing_thread)
+          @verifier && testing_thread
+        end
+
+        def _verify(request)
+          case @verifier
+          when Proc then @verifier.call(request.dup, request.params)
+          when Hash then verify_by_hash(@verifier, request.params)
+          end
+        end
+
+        def verify_by_hash(expectations, actuals)
+          expectations.all? do |key, value|
+            hash_expectation_match?(value, actuals[key.to_s])
+          end
+        end
+
+        def hash_expectation_match?(expect, actual)
+          case expect
+          when String then expect == actual
+          when Regexp then expect.match(actual)
+          end
         end
       end
     end

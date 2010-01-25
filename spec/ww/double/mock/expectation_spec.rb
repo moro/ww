@@ -3,47 +3,61 @@ require 'ww/double'
 require 'ww/double/mock/expectation'
 require 'rack/mock'
 
-describe Ww::Double::Mock::Expectation do
+describe Ww::Double::Mock::Expectation, "[GET] /pass?key=value&int=10" do
+  def expectation(*verifier, &block)
+    Ww::Double::Mock::Expectation.new(:get, "/pass", *verifier, &block)
+  end
+
   before do
-    @request = Rack::Request.new( Rack::MockRequest.env_for("/pass?key=value", :method => "GET"))
+    @request = Rack::Request.new( Rack::MockRequest.env_for("/pass?key=value&int=10", :method => "GET"))
   end
   subject { expect{ @expectation.verify(@request, Thread.current) } }
 
   describe "with block" do
     before do
-      v = lambda {|req, p| req.path == "/pass" }
-      @expectation = Ww::Double::Mock::Expectation.new(:get, "/", v)
+      @expectation = expectation{|req, prm|
+        req.path == "/pass" &&
+        prm["key"] == "value" &&
+        prm["int"] == "10"
+      }
     end
     it { should_not raise_error Exception }
 
     describe "fail" do
       before do
-        v = lambda {|req, p| req.path == "/fail" }
-        @expectation = Ww::Double::Mock::Expectation.new(:get, "/", v)
+        @expectation = expectation{|req, prm|
+          req.path == "/pass" &&
+          prm["key"] == "value" &&
+          prm["int"] == "11"
+        }
       end
       it { should raise_error Ww::Double::MockError }
     end
   end
 
-  describe "with hash w/ String match" do
-    before do
-      @expectation = Ww::Double::Mock::Expectation.new(:get, "/", :key => "value")
-    end
+  describe ":key => \"value\"" do
+    before { @expectation = expectation(:key => "value") }
     it { should_not raise_error Exception }
 
-    describe "fail" do
-      before do
-        @expectation = Ww::Double::Mock::Expectation.new(:get, "/", :key => "VALUE")
-      end
+    describe ":key => \"VALUE\"" do
+      before { @expectation = expectation(:key => "VALUE") }
       it { should raise_error Ww::Double::MockError }
     end
+  end
 
-    describe "regexp" do
-      before do
-        @expectation = Ww::Double::Mock::Expectation.new(:get, "/", :key => /VALUE/i)
-      end
-      it { should_not raise_error Exception }
-    end
+  describe ":key => /VALUE/i # regexp match" do
+    before { @expectation = expectation(:key => /VALUE/i) }
+    it { should_not raise_error Exception }
+  end
+
+  describe ":int => 10" do
+    before { @expectation = expectation(:int => 10) }
+    it { should_not raise_error Exception }
+  end
+
+  describe ":int => Integer" do
+    before { @expectation = expectation(:int => Integer) }
+    it { should_not raise_error Exception }
   end
 end
 

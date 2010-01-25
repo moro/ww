@@ -21,11 +21,34 @@ module Ww
       def build_double(port, &block)
         new(Application.new(&block), port)
       end
+
+      def detect_server(args)
+        if servers.include?(args.first)
+          return self[args.shift]
+        elsif servers.size == 1
+          return servers.values.first
+        end
+        raise ArgumentError, "Ambigous server" unless server
+      end
     end
 
-    def_delegators :current_app, *double_methods = %w[
-      spy spy_them_all! requests mock verify stub
+    double_methods = %w[
+      spy spy_them_all! requests
+      mock verify
+      stub
     ]
+
+    # server instance delegate the methods to currently working Ww::Servlet
+    def_delegators :current_servlet, *double_methods
+
+    # syntax sugers above
+    (double_methods + %w[start_once shutdown running?]).each do |server_method|
+      class_eval <<-RUBY, __FILE__, __LINE__
+      def self.#{server_method}(*args, &block)
+        detect_server(args).#{server_method}(*args, &block)
+      end
+      RUBY
+    end
 
     attr_reader :app, :port
 
@@ -37,7 +60,7 @@ module Ww
 
     def start_once
       @app.reset!
-      current_app.testing_thread = Thread.current
+      current_servlet.testing_thread = Thread.current
       start! unless running?
     end
 
@@ -91,7 +114,7 @@ module Ww
       end
     end
 
-    def current_app
+    def current_servlet
       app.current
     end
   end

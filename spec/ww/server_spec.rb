@@ -35,5 +35,34 @@ describe Ww::Server do
     end
   end
 
+  describe "SyntaxSuger" do
+    describe "stub" do
+      before { Ww::Server[:spec].should_receive(:stub).and_return "--stub--" }
+      it "Ww::Server.stub(ident) calls Ww::Server[:ident].stub" do
+        Ww::Server.stub(:spec).should == "--stub--"
+      end
+
+      it "Ww::Server.stub calls Ww::Server[:ident].stub when has only 1 server" do
+        Ww::Server.stub.should == "--stub--"
+      end
+    end
+
+    describe "mock" do
+      before { Ww::Server[:spec].should_receive(:mock).with(:key => "value").and_return "--mock--" }
+
+      it "Ww::Server.mock(ident, expectation) calls Ww::Server[:ident].mock(expectation)" do
+        Ww::Server.mock(:spec, :key => "value").should == "--mock--"
+      end
+
+      it "Ww::Server.mock(expectation) calls Ww::Server[:ident].mock(expectation) when defined only 1 server" do
+        Ww::Server.mock(:key => "value").should == "--mock--"
+      end
+    end
+
+    it "Ww::Server.start_once(ident) calls Ww::Server[:ident].start_once" do
+      Ww::Server[:spec].should_receive(:start_once).and_return "--start_once--"
+      Ww::Server.start_once(:spec).should == "--start_once--"
+    end
+  end
 end
 

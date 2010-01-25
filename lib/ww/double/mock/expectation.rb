@@ -2,8 +2,7 @@ module Ww
   module Double
     module Mock
       class Expectation
-        def executed!; @e = true; end
-        def executed?; !!@e; end
+        def executed?; !!@executed; end
         attr_reader :identifier
 
         def initialize(verb, path, verifier = nil)
@@ -12,8 +11,9 @@ module Ww
         end
 
         def verify(request, testing_thread = nil)
-          return true unless @verifier && testing_thread # no need to verify
-          return true if @verifier.call(r = request.dup, r.params)
+          @executed = true
+          return @executed unless @verifier && testing_thread # no need to verify
+          return @executed if @verifier.call(r = request.dup, r.params)
 
           testing_thread.raise MockError
         end

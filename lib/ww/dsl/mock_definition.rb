@@ -21,7 +21,6 @@ module Ww
 
         servlet.stub.send(verb, path, options) do |*args|
           expect.verify(request, self.class.testing_thread)
-          expect.executed!
 
           action.bind(self).call(*args)
         end

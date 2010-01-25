@@ -8,7 +8,7 @@ describe Ww::Server do
     Ww::Server.handler = :mongrel # Mongrel is most silent.
     Ww::Server[:spec] ||= Ww::Server.build_double(3080) do
       get("/goodnight") { "Good night" }
-      spy(:get, "/hello") { "Hello world" }
+      spy.get("/hello") { "Hello world" }
     end
     Ww::Server[:spec].start_once
   end

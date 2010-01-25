@@ -8,7 +8,7 @@ describe Ww::Server do
     Ww::Server.handler = :webrick
     Ww::Server[:spec] ||= Ww::Server.build_double(3080) do
       get("/goodnight") { "Good night" }
-      spy(:get, "/hello") { "Hello world" }
+      spy.get("/hello") { "Hello world" }
     end
     Ww::Server[:spec].start_once
   end
@@ -26,7 +26,7 @@ describe Ww::Server do
 
   describe "spying POST action" do
     before do
-      Ww::Server[:spec].spy(:post, "/message") { status(200) }
+      Ww::Server[:spec].spy.post("/message") { status(200) }
 
       Net::HTTP.start("localhost", 3080) do |http|
         post = Net::HTTP::Post.new("/message")
@@ -46,7 +46,7 @@ describe Ww::Server do
     before do
       # validates it's not stubbed.
       URI("http://localhost:3080/goodnight").read.should == "Good night"
-      Ww::Server[:spec].stub(:get, "/goodnight") { "I'm sleepy, too" }
+      Ww::Server[:spec].stub.get("/goodnight") { "I'm sleepy, too" }
     end
 
     subject { URI("http://localhost:3080/goodnight").read }
@@ -55,7 +55,7 @@ describe Ww::Server do
 
   describe "mocking" do
     before do
-      Ww::Server[:spec].mock(:get, "/goodnight") do
+      Ww::Server[:spec].mock.get("/goodnight") do
         "OYASUMI-NASAI"
       end
     end
@@ -72,8 +72,9 @@ describe Ww::Server do
 
   describe "mocking with verifying expectation" do
     before do
-      v = lambda {|req,par| par["key"] == "value" }
-      Ww::Server[:spec].mock(:get, "/goodnight", :verify => v) do
+      Ww::Server[:spec].mock{|req,par|
+        par["key"] == "value"
+      }.get("/goodnight") do
         "OYASUMI-NASAI"
       end
     end

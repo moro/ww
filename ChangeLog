@@ -1,3 +1,8 @@
+== 0.4.0 / 2010 01-28
+* new API to defining double actions.
+* new API (syntax suger) to access defined dobule server.
+* add Hash-style expectation for simple expectation of mock.
+
 == 0.3.1 / 2010 01-20
 * add utility method to store all request.
 * silence WEBrick and Thin servers.

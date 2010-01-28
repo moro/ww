@@ -7,7 +7,7 @@ module Ww
 
         def initialize(verb, path, verifier = nil, &verify_block)
           if verifier && block_given?
-            raise ArgumentError, "only on of either argument or block can specified."
+            raise ArgumentError, "only one of either argument or block can specified."
           end
 
           @identifier = "_mock_ #{verb.to_s.upcase} #{path}"

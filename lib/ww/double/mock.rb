@@ -1,4 +1,3 @@
-require 'forwardable'
 require 'ww/dsl/mock_definition'
 
 module Ww

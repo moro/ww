@@ -3,15 +3,13 @@ require 'forwardable'
 
 module Ww
   class Application
+    extend Forwardable
     attr_reader :current
+    def_delegators :current, :call
 
     def initialize(&servlet_initializer)
       @servlet_initializer = servlet_initializer
       reset!
-    end
-
-    def call(env)
-      current.call(env)
     end
 
     def reset!

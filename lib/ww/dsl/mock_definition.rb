@@ -4,9 +4,9 @@ require 'ww/double/mock/expectation'
 module Ww
   module Dsl
     class MockDefinition < DefinitionBase
-      def initialize(servlet, &block)
+      def initialize(servlet, verification = nil, &block)
         super(servlet)
-        @verification = block
+        @verification = block_given? ? block : verification
       end
 
       private

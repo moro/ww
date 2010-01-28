@@ -70,9 +70,29 @@ describe Ww::Server do
     end
   end
 
-  describe "mocking with verifying expectation" do
+  describe "mocking with verifying hash expectation" do
     before do
-      Ww::Server[:spec].mock{|req,par|
+      Ww::Server.mock(:spec, :key => "value").get("/goodnight") do
+        "OYASUMI-NASAI"
+      end
+    end
+
+    it "fail unless access there" do
+      expect{
+        URI("http://localhost:3080/goodnight").read
+      }.should raise_error Ww::Double::MockError
+    end
+
+    it "pass if access there" do
+      expect{
+        URI("http://localhost:3080/goodnight?key=value").read
+      }.should_not raise_error
+    end
+  end
+
+  describe "mocking with verifying block expectation" do
+    before do
+      Ww::Server.mock(:spec){|req,par|
         par["key"] == "value"
       }.get("/goodnight") do
         "OYASUMI-NASAI"

@@ -12,8 +12,8 @@ module Ww
         @testing_thread
       end
 
-      def mock(&block)
-        Dsl::MockDefinition.new(self, &block)
+      def mock(args = nil, &block)
+        Dsl::MockDefinition.new(self, args, &block)
       end
 
       def verify

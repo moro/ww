@@ -28,7 +28,7 @@ module Ww
     end
 
     def call(env)
-      [200, {"Content-Type" => "text/html"}, template.render(self)]
+      [200, {"Content-Type" => "text/html"}, [template.render(self)]]
     end
 
     private

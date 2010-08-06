@@ -1,5 +1,5 @@
 module Ww
-  Version = '0.4.1'
+  Version = '0.4.2'
   autoload 'SpyEye', 'ww/spy_eye'
   autoload 'Server', 'ww/server'
 end

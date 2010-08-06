@@ -4,6 +4,25 @@ autoload :JSON, 'json'
 autoload :YAML, 'yaml'
 
 module Ww::Double::Spy
+  if defined?(ActiveSupport::JSON)
+    def decode_json(json_string)
+      ActiveSupport::JSON.decode(json_string)
+    end
+  else
+    unless defined?(::JSON)
+      begin
+        require 'json_pure'
+      rescue LoadError
+        require 'json'
+      end
+    end
+    def decode_json(json_string)
+      ::JSON.parse(json_string)
+    end
+  end
+
+  module_function :decode_json
+
   class Request < ::Rack::Request
     attr_reader :time
     @@req_parsers = []
@@ -13,11 +32,11 @@ module Ww::Double::Spy
     end
 
     regist_request_parser %r{[application|text]/json} do |body|
-      JSON.parse(body)
+      ::Ww::Double::Spy.decode_json(body)
     end
 
     regist_request_parser %r{[application|text]/json} do |body|
-      JSON.parse(body)
+      ::Ww::Double::Spy.decode_json(body)
     end
 
     regist_request_parser %r{[application|text]/yaml} do |body|
